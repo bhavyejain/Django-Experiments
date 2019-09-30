@@ -1,6 +1,25 @@
 <h1>{{ question.question_text }}</h1>
-<ul>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<!-- THIS IS A POST FORM -->
+
+<!--Django’s login form is returned using the POST method, in which 
+the browser bundles up the form data, encodes it for transmission, 
+sends it to the server, and then receives back its response.-->
+<form action = "{% url 'polls:vote' question.id %}" method = "post">
+
+	<!--All POST forms that are targeted at internal URLs should use the {% csrf_token %} template tag.-->
+	{% csrf_token %}
 	{% for choice in question.choice_set.all %}
-		<li>{{ choice.choice_text }}</li>
+
+		<!-- display a radio button for each choice -->
+		<input type = "radio" name = "choice" id = "choice{{ forloop.counter }}" value = "{{ choice.id }}">
+		<!--On submit, it’ll send the POST data choice=# where # is the ID of the selected choice-->
+
+		<!--The forloop.counter indicates ow many times the for tag has gone through its loop-->
+		<label for = "choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
 	{% endfor %}
-</ul>
+	<input type = "submit" value = "Vote">
+</form>
+

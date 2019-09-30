@@ -345,3 +345,35 @@ It raises Http404 if the list is empty.
 
 
 =========================================================================================
+# CREATE AND EDIT MORE TEMPLATES
+_________________________________________________________________________________________
+
+The code for templates is commented to provide explanation.
+
+### Templates created:
+-> index.html
+-> detail.html
+-> results.html
+
+
+=========================================================================================
+# GENERIC VIEWS
+_________________________________________________________________________________________
+
+To convert to generic views:
+
+1) Convert the URLconf.
+2) Delete some of the old, unneeded views.
+3) Introduce new views based on Django’s generic views.
+
+For the views which will be replaced by generic views, in `<app name>/urls.py`,
+modify the paths to the views as:
+```py
+urlpatterns = [
+    path('', views.GenericViewClass1.as_view(), name='view1'),
+    path('<int:pk>/', views.GenericViewClass2.as_view(), name='view2'),
+    path('<int:pk>/view3/', views.GenericViewClass3.as_view(), name='view3'),
+]
+```
+
+The `DetailView` generic view expects the name of teh primary key to be "pk", hence the earlier change.
