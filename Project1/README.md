@@ -13,7 +13,7 @@ $ django-admin startproject <project_name>
 $ cd <project_name>									// cd into outer project directory
 $ python manage.py runserver
 ```
-For custim port,
+For custom port,
 ```sh
 $ python manage.py runserver 8080
 ```
@@ -27,7 +27,7 @@ $ python manage.py startapp <app_name>
 ```
 
 
-=================================================================================
+=========================================================================================
 # CREATING VIEWS AND MAPPING URLs
 _________________________________________________________________________________
 
@@ -54,6 +54,7 @@ from django.urls import path
 
 from . import views
 
+app_name = <app_name>
 urlpatterns = [
     path('', views.index, name='index'),	# The first argument is what shows up in the address bar at that page. Here we expect nothing. 
     										# The second argument is the view that we want to call and the function when we go to the URL.
@@ -78,7 +79,7 @@ urlpatterns = [
 ```
 
 
-==================================================================================
+=========================================================================================
 # DATABASE SETUP
 __________________________________________________________________________________
 
@@ -102,7 +103,7 @@ $ python manage.py migrate
 ```
 
 
-===================================================================================
+=========================================================================================
 # CREATING MODELS
 ___________________________________________________________________________________
 
@@ -164,7 +165,7 @@ $ python manage.py migrate
 ```
 
 
-====================================================================================
+=========================================================================================
 # DATABASE API
 ____________________________________________________________________________________
 
@@ -224,7 +225,7 @@ To create objects of a model class:
 ```
 
 
-===================================================================================
+=========================================================================================
 # DJANGO ADMIN
 ___________________________________________________________________________________
 
@@ -257,7 +258,8 @@ from .models import App_model_1
 admin.site.register(App_model_1)
 ```
 
-===================================================================================
+
+=========================================================================================
 # TEMPLATES
 ___________________________________________________________________________________
 
@@ -269,9 +271,9 @@ you can refer to this template within Django simply as `app_name/view_name.html`
 Write HTML code in the template for the webpage.
 Example:
 ```HTML
-{% if latest_question_list %}
+{% if list_variable %}
     <ul>
-    {% for question in latest_question_list %}
+    {% for question in list_variable %}
         <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
     {% endfor %}
     </ul>
@@ -280,4 +282,66 @@ Example:
 {% endif %}
 ```
 
-Update our <view_name> view in `app_name/views.py` to use the template:
+Update our <view_name> view in `app_name/views.py` to use the template. Example:
+
+```py
+from django.template import loader
+
+# ...
+
+def view_name(request):
+    list_variable = App_model_1.objects.order_by('-pub_date')[:5]
+    template = loader.get_template('app_name/view_name.html')
+    context = {
+        'list_variable': list_variable,
+    }
+    return HttpResponse(template.render(context, request))
+```
+
+We can use a shortcut with the `render()` function as follows (then no need to inport HttpResponse and loader):
+
+```py
+def index(request):
+    list_variable = App_model_1.order_by('-pub_date')[:5]
+    context = {'list_variable': list_variable}
+    return render(request, 'app_name/view_name.html', context)
+```
+
+The render() function takes the request object as its first argument, a template name as its second argument and a 
+dictionary as its optional third argument. It returns an HttpResponse object of the given template rendered with the given context.
+
+
+=========================================================================================
+# RAISING 404 ERRORS
+___________________________________________________________________________________
+
+In `app_name/views.py`, to the view where we need to add 404, add the code (example):
+```py
+from django.http import Http404
+
+# ...
+
+def view_name(request, question_id):
+    try:
+        question = Question.objects.get(pk=question_id)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist")                                # custom 404 message
+    return render(request, 'app_name/view_name.html', {'question': question})
+```
+
+Or use the shortcut with `get_object_or_404()`:
+```py
+from django.shortcuts import get_object_or_404, render
+
+# ...
+
+def view_name(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'app_name/view_name.html', {'question' : question})
+```
+
+There’s also a `get_list_or_404()` function, which works just as `get_object_or_404()` – except using filter() instead of get(). 
+It raises Http404 if the list is empty.
+
+
+=========================================================================================
