@@ -352,7 +352,9 @@ The code for templates is commented to provide explanation.
 
 ### Templates created:
 -> index.html
+
 -> detail.html
+
 -> results.html
 
 
