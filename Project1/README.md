@@ -46,7 +46,7 @@ def index(request):
 
 ## 2) Map the view to a URL:
 
-In the <app_name> directory, creaye a `urls.py` file. 
+In the <app_name> directory, create a `urls.py` file. 
 The the file, include the following code:
 
 ```py
@@ -378,4 +378,80 @@ urlpatterns = [
 ]
 ```
 
-The `DetailView` generic view expects the name of teh primary key to be "pk", hence the earlier change.
+The `DetailView` generic view expects the name of the primary key to be "pk", hence the earlier change.
+
+Each generic view expects a model to be provided. We can provide querysets if we want the view to work on filtered data.
+
+Using model:
+```py
+class View_name(generic.DetailView):
+    model = App_model_1
+    template_name = 'app_name/view_name.html'
+```
+
+Using queryset:
+```py
+class View_name(generic.ListView):
+    template_name = 'app_name/view_name.html'
+    context_object_name = 'latest_question_list'    # specify explicitly because default generated context variable might not be correct
+
+    def get_queryset(self):
+        """Return last 5 published questions"""
+        return Question.objects.order_by('-pub_date')[:5]
+```
+(Ref: https://docs.djangoproject.com/en/2.2/ref/class-based-views/generic-display/#django.views.generic.list.ListView)
+(Ref: https://docs.djangoproject.com/en/2.2/topics/class-based-views/generic-display/)
+
+
+=========================================================================================
+#CREATING TEST FILES
+_________________________________________________________________________________________
+
+Edit the tests.py in the app directory to include tests.
+
+Check `polls/tests.py` for examples.
+
+To execute tests:
+```sh
+$ python manage.py test <app_name>
+```
+
+Django provides a test Client to simulate a user interacting with the code at the view level. 
+We can use it in tests.py or even in the shell.
+
+```sh
+$ python manage.py shell
+```
+
+```py
+>>> from django.test.utils import setup_test_environment
+>>> setup_test_environment()
+```
+
+Next, import the test client class
+```py
+>>> from django.test import Client
+>>> # create an instance of the client
+>>> client = Client()
+```
+
+Now use the client to do some work:
+```py
+>>> # get a response from '/'
+>>>  response = client.get('/')
+Not Found: /
+>>> # we should expect a 404 from that address; if you instead see an
+>>> # "Invalid HTTP_HOST header" error and a 400 response, you probably
+>>> # omitted the setup_test_environment() call described earlier.
+>>> response.status_code
+404
+>>> # on the other hand we should expect to find something at '/polls/'
+>>> # we'll use 'reverse()' rather than a hardcoded URL
+>>> from django.urls import reverse
+>>> response = client.get(reverse('<app_name>:<url_name>'))
+>>> response.status_code
+>>> response.content
+>>> response.context['latest_question_list']
+```
+
+Now modify the test.py to include tests for views.
