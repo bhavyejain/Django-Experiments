@@ -17,7 +17,7 @@ sends it to the server, and then receives back its response.-->
 		<input type = "radio" name = "choice" id = "choice{{ forloop.counter }}" value = "{{ choice.id }}">
 		<!--On submit, it’ll send the POST data choice=# where # is the ID of the selected choice-->
 
-		<!--The forloop.counter indicates ow many times the for tag has gone through its loop-->
+		<!--The forloop.counter indicates how many times the for tag has gone through its loop-->
 		<label for = "choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
 	{% endfor %}
 	<input type = "submit" value = "Vote">
