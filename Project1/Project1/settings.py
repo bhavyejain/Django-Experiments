@@ -55,7 +55,7 @@ ROOT_URLCONF = 'Project1.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # a list of filesystem directories to check when loading Django templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

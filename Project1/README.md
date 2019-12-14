@@ -481,3 +481,23 @@ To add a css static fole to a template, add the following lines at the top of te
 ```
 
 The `{% static %}` template tag generates the absolute URL of static files.
+
+To add images, create a directory "images" inside `static/<app_name>/` and place the images in this directory.
+Add the images to the web page using the `style.css` file and then including it in the view.
+
+(ref1: https://docs.djangoproject.com/en/2.2/howto/static-files/ )
+(ref2: https://docs.djangoproject.com/en/2.2/ref/contrib/staticfiles/ )
+(ref3: https://docs.djangoproject.com/en/2.2/howto/static-files/deployment/ )
+
+
+=========================================================================================
+# CUSTOMISING THE ADMIN FORM
+_________________
+
+To construct a default form for a model, use `admin.site.register(Model_name)`. (admin.py)
+
+To change the heading of admin pages:
+Create directory "templates/admin" inside the outermost project directory (the one containing manage.py).
+Copy the base_site.html template from django's original templates into the directory and edit its h1 tag.
+
+Current admin code can be viewed in admin.py and models.py
