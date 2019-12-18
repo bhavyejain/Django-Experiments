@@ -18,8 +18,16 @@ h1, h2, h3, h4 {
     font-family: 'Lobster', cursive;
 }
 
+.btn.btn-default {
+    float: right;
+    margin-top: 5px;
+}
+
 .date {
     color: #828282;
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
 }
 
 .save {
