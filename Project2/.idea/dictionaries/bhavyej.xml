@@ -3,8 +3,12 @@
     <words>
       <w>endblock</w>
       <w>endfor</w>
+      <w>ffffff</w>
+      <w>glyphicon</w>
       <w>kolkata</w>
       <w>pythonanywhere</w>
+      <w>textarea</w>
+      <w>truncatechars</w>
     </words>
   </dictionary>
 </component>

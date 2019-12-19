@@ -18,9 +18,25 @@ h1, h2, h3, h4 {
     font-family: 'Lobster', cursive;
 }
 
-.btn.btn-default {
+.btn {
     float: right;
-    margin-top: 5px;
+}
+
+.btn.edit {
+    float: right;
+    padding: 7px 7px 7px 7px;
+    margin-right: 5px;
+}
+
+.btn.publish {
+    float: right;
+    margin-right: 5px;
+    padding: 4px 8px 4px 8px;
+}
+
+.btn.delete {
+    float: right;
+    padding: 7px 7px 7px 7px;
 }
 
 .date {
@@ -43,6 +59,14 @@ h1, h2, h3, h4 {
     float: right;
     font-size: 26pt;
     margin-right: 20px;
+}
+
+.top-menu.user {
+    color: #ffffff;
+    margin-top: 60px;
+    margin-right: 20px;
+    float: right;
+    font-size: 15pt;
 }
 
 .post {
