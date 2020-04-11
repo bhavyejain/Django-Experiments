@@ -30,6 +30,13 @@ This repository is a collection of short projects I made in order to learn Djang
 ~$ deactivate
 ```
 
+### Install Django
+
+Install latest distribution of Django using:
+```sh
+~$ python3 -m pip install Django
+```
+
 ## Project 1
 This is the code for the official tutoial of django.
 
