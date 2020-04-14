@@ -32,9 +32,9 @@ This repository is a collection of short projects I made in order to learn Djang
 
 ### Install Django
 
-Install latest distribution of Django using:
+Install latest distribution (at the time of building this project, the latest version was 3.0.5) of Django using:
 ```sh
-~$ python3 -m pip install Django
+~$ pip install Django==3.0.5
 ```
 
 ## Project 1
