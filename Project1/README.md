@@ -54,7 +54,7 @@ from django.urls import path
 
 from . import views
 
-app_name = <app_name>
+app_name = '<app_name>'
 urlpatterns = [
     path('', views.index, name='index'),	# The first argument is what shows up in the address bar at that page. Here we expect nothing. 
     										# The second argument is the view that we want to call and the function when we go to the URL.
